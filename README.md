@@ -1,18 +1,30 @@
 
 #конфиги
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -e OVPN_CLIENT_TO_CLIENT=1 -e OVPN_PORT=1195 noowan/noowan:openvpn_to_home ovpn_genconfig -u udp://zabbix.afedotov.ru
+
 #ключи
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -it noowan/noowan:openvpn_to_home ovpn_initpki
+
 #сервер
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -d --net openvpn_home -p 1195:1195/udp --cap-add=NET_ADMIN --name openvpn_to_home noowan/noowan:openvpn_to_home
+
 #пользователь
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -it noowan/noowan:openvpn_to_home easyrsa build-client-full client nopass
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -it noowan/noowan:openvpn_to_home easyrsa build-client-full home nopass
+
 #выгрузка ovpn
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -e OVPN_PORT=1195 noowan/noowan:openvpn_to_home ovpn_getclient client > client.ovpn
+
 docker run -v /home/afedotov/docker/volumes/openvpn_to_home:/etc/openvpn --rm -e OVPN_PORT=1195 noowan/noowan:openvpn_to_home ovpn_getclient home > home.ovpn
 
-изменен порт, изменена генерация ovpn(добавлены push и iroute для клиентов)
+изменен порт, изменена генерация ovpn(добавлены push и iroute для клиентов) 
+
 Docker Hub: noowan/noowan:openvpn_to_home
 # OpenVPN for Docker
 
