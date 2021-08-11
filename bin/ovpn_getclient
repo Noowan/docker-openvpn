@@ -72,7 +72,7 @@ tls-auth ta.key 1
 "
     fi
 
-    if [ "$OVPN_DEFROUTE" != "0" ];then
+    if [ "$OVPN_DEFROUTE" != "1" ];then
         echo "redirect-gateway def1"
     fi
 
